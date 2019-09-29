@@ -3,6 +3,7 @@
 package lesson3.task1
 
 import lesson1.task1.sqr
+import kotlin.math.abs
 import kotlin.math.pow
 import kotlin.math.sqrt
 
@@ -73,7 +74,7 @@ fun digitNumber(n: Int): Int {
     var a = n
     var k = 0
     if (a == 0) return 1
-    while (a > 0) {
+    while (abs(a) > 0) {
         a /= 10
         k++
     }
@@ -139,16 +140,7 @@ fun minDivisor(n: Int): Int {
  *
  * Для заданного числа n > 1 найти максимальный делитель, меньший n
  */
-fun maxDivisor(n: Int): Int {
-    if (n % 2 == 0) return n / 2
-    else {
-        for (i in n / 2 - 1 downTo 3 step 2) {
-            if (n % i == 0) return i
-        }
-    }
-    return 1
-
-}
+fun maxDivisor(n: Int): Int = n / minDivisor(n)
 
 /**
  * Простая
@@ -160,6 +152,7 @@ fun maxDivisor(n: Int): Int {
 fun isCoPrime(m: Int, n: Int): Boolean {
     var k = maxOf(m, n)
     var l = minOf(m, n)
+    if (k == 1 && l == 1) return true
     if (k % l == 0 || l % k == 0) return false
     while (k > 1 && l > 1) {
         k %= l
