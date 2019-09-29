@@ -152,7 +152,7 @@ fun maxDivisor(n: Int): Int = n / minDivisor(n)
 fun isCoPrime(m: Int, n: Int): Boolean {
     var k = maxOf(m, n)
     var l = minOf(m, n)
-    if (k == 1 && l == 1) return true
+    if (k == 1 || l == 1) return true
     if (k % l == 0 || l % k == 0) return false
     while (k > 1 && l > 1) {
         k %= l
