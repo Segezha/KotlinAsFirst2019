@@ -73,11 +73,10 @@ fun digitCountInNumber(n: Int, m: Int): Int =
 fun digitNumber(n: Int): Int {
     var a = n
     var k = 0
-    if (a == 0) return 1
-    while (abs(a) > 0) {
+    do {
         a /= 10
         k++
-    }
+    } while (abs(a) > 0)
     return k
 }
 
@@ -87,21 +86,14 @@ fun digitNumber(n: Int): Int {
  * Найти число Фибоначчи из ряда 1, 1, 2, 3, 5, 8, 13, 21, ... с номером n.
  * Ряд Фибоначчи определён следующим образом: fib(1) = 1, fib(2) = 1, fib(n+2) = fib(n) + fib(n+1)
  */
-//fun fib(n: Int): Int =
-//    when {
-//        (n == 1) || (n == 2) -> 1
-//        else -> fib(n - 2) + fib(n - 1)
-//    }
 fun fib(n: Int): Int {
     var f1 = 1
     var f2 = 1
-    var f = 0
     if ((n == 1) || (n == 2)) return 1
-    else for (i in 3..n) {
-        f = f1 + f2
+    for (i in 3..n) {
+        val f = f1 + f2
         f1 = f2
         f2 = f
-        f = 0
     }
     return f2
 }
@@ -152,15 +144,11 @@ fun maxDivisor(n: Int): Int = n / minDivisor(n)
 fun isCoPrime(m: Int, n: Int): Boolean {
     var k = maxOf(m, n)
     var l = minOf(m, n)
-    if (k == 1 || l == 1) return true
-    if (k % l == 0 || l % k == 0) return false
-    while (k > 1 && l > 1) {
+    while (l != 0) {
         k %= l
-        l %= k
-        if (k <= 1 && l <= 1) return true
-        if ((m % k == 0 && n % k == 0 && (k >= 2)) || (m % l == 0 && n % l == 0 && (l >= 2))) return false
+        l = k.also { k = l }
     }
-    return true
+    return k == 1
 }
 
 /**
@@ -173,9 +161,7 @@ fun isCoPrime(m: Int, n: Int): Boolean {
 fun squareBetweenExists(m: Int, n: Int): Boolean {
     val k = sqrt(m.toDouble()).toInt()
     val l = sqrt(n.toDouble()).toInt()
-    if (k != l) return true
-    if (sqr(k) == m) return true
-    if (sqr(k) == m) return true
+    if ((k != l) || (sqr(k) == m)) return true
     return false
 }
 
@@ -268,13 +254,12 @@ fun isPalindrome(n: Int): Boolean = n == revert(n)
 fun hasDifferentDigits(n: Int): Boolean {
     var a = n
     var c = n % 10
-    if (a - 10 < 0) return false
     a /= 10
-    while (a > 0) {
+    do {
         if (c != a % 10) return true
         c = a % 10
         a /= 10
-    }
+    } while (a > 0)
     return false
 }
 
@@ -308,7 +293,7 @@ fun squareSequenceDigit(n: Int): Int {
  *
  * Использовать операции со строками в этой задаче запрещается.
  */
-fun fibSequenceDigit(n: Int): Int  {
+fun fibSequenceDigit(n: Int): Int {
     var c = 0
     var k = 0
     for (i in 1..n) {
