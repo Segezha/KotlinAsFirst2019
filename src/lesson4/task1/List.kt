@@ -225,10 +225,10 @@ fun factorizeToString(n: Int): String = factorize(n).joinToString(separator = "*
 fun convert(n: Int, base: Int): List<Int> {
     val convertedN = mutableListOf<Int>()
     var num = n
-    while (num > 0) {
+    do {
         convertedN.add(num % base)
         num /= base
-    }
+    } while (num > 0)
     return convertedN.asReversed()
 }
 
@@ -337,6 +337,7 @@ val theSecondTen = arrayOf(
 )
 
 fun thousands(n: Int): String {
+    if (n / 1000 % 100 in 11..14) return "тысяч"
     return when (n / 1000 % 10) {
         1 -> "тысяча"
         in 2..4 -> "тысячи"
