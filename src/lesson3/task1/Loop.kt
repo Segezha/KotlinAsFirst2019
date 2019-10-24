@@ -71,12 +71,12 @@ fun digitCountInNumber(n: Int, m: Int): Int =
  * Использовать операции со строками в этой задаче запрещается.
  */
 fun digitNumber(n: Int): Int {
-    var a = n
+    var a = abs(n)
     var k = 0
     do {
         a /= 10
         k++
-    } while (abs(a) > 0)
+    } while (a > 0)
     return k
 }
 
@@ -161,8 +161,7 @@ fun isCoPrime(m: Int, n: Int): Boolean {
 fun squareBetweenExists(m: Int, n: Int): Boolean {
     val k = sqrt(m.toDouble()).toInt()
     val l = sqrt(n.toDouble()).toInt()
-    if ((k != l) || (sqr(k) == m)) return true
-    return false
+    return ((k != l) || (sqr(k) == m))
 }
 
 /**
