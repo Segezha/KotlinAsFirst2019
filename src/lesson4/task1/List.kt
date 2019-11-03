@@ -246,8 +246,8 @@ fun convert(n: Int, base: Int): List<Int> {
 fun convertToString(n: Int, base: Int): String {
     val list = convert(n, base)
     var num = ""
-    for (i in 0 until list.size) {
-        if (list[i] > 9) num += (((list[i] + 87).toByte()).toChar()) else num += list[i].toString()
+    list.map {
+        if (it > 9) num += (((it + 87).toByte()).toChar()) else num += it.toString()
     }
     return num
 }
@@ -261,9 +261,7 @@ fun convertToString(n: Int, base: Int): String {
  */
 fun decimal(digits: List<Int>, base: Int): Int {
     var dec = 0
-    for (i in 0 until digits.size) {
-        dec += digits[i] * base.toDouble().pow(digits.size - i - 1).toInt()
-    }
+    digits.mapIndexed { index, it -> dec += it * base.toDouble().pow(digits.size - index - 1).toInt() }
     return dec
 }
 
