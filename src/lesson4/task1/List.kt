@@ -307,13 +307,13 @@ fun roman(n: Int): String = TODO()
 fun russian(n: Int): String {
     val list = mutableListOf<String>()
     list.add(hundreds[n / 100000])
-    if (n / 10000 % 10 == 1) list.add(theSecondTen[n / 1000 % 10]) else {
+    if ((n / 10000 % 10 == 1) && (n / 1000 % 100 != 10)) list.add(theSecondTen[n / 1000 % 10]) else {
         list.add(tens[n / 10000 % 10])
         list.add(unitsF[n / 1000 % 10])
     }
     if (n / 1000 != 0) list.add(thousands(n))
     list.add(hundreds[n / 100 % 10])
-    if (n / 10 % 10 == 1) list.add(theSecondTen[n % 10]) else {
+    if ((n / 10 % 10 == 1) && (n % 100 != 10)) list.add(theSecondTen[n % 10]) else {
         list.add(tens[n / 10 % 10])
         list.add(unitsS[n % 10])
     }
