@@ -3,10 +3,7 @@
 package lesson4.task1
 
 import lesson1.task1.discriminant
-import lesson1.task1.sqr
-import lesson3.task1.digitNumber
 import lesson3.task1.minDivisor
-import kotlin.math.pow
 import kotlin.math.sqrt
 
 /**
@@ -162,12 +159,13 @@ fun times(a: List<Int>, b: List<Int>): Int = (a zip b).sumBy { it.first * it.sec
  * Значение пустого многочлена равно 0 при любом x.
  */
 fun polynom(p: List<Int>, x: Int): Int {
-    val xD = x.toDouble()
-    var result = 0.0
+    var xP = 1
+    var result = 0
     for (i in 0 until p.size) {
-        result += p[i] * xD.pow(i)
+        result += p[i] * xP
+        xP *= x
     }
-    return result.toInt()
+    return result
 }
 
 /**
@@ -245,11 +243,12 @@ fun convert(n: Int, base: Int): List<Int> {
  */
 fun convertToString(n: Int, base: Int): String {
     val list = convert(n, base)
-    var num = ""
-    list.map {
-        if (it > 9) num += (((it + 87).toByte()).toChar()) else num += it.toString()
+    val num = mutableListOf<Char>()
+    for (i in 0 until list.size) {
+        num += if (list[i] > 9) 'a' + list[i] - 10
+        else ('0' + list[i])
     }
-    return num
+    return num.joinToString(separator = "")
 }
 
 /**
@@ -261,7 +260,11 @@ fun convertToString(n: Int, base: Int): String {
  */
 fun decimal(digits: List<Int>, base: Int): Int {
     var dec = 0
-    digits.mapIndexed { index, it -> dec += it * base.toDouble().pow(digits.size - index - 1).toInt() }
+    var p = 1
+    for (i in digits.size - 1 downTo 0) {
+        dec += digits[i] * p
+        p *= base
+    }
     return dec
 }
 
@@ -280,9 +283,7 @@ fun decimal(digits: List<Int>, base: Int): Int {
 fun decimalFromString(str: String, base: Int): Int {
     val list = mutableListOf<Int>()
     for (i in 0 until str.length) {
-        val num = str[i].toByte().toInt()
-        val symb = str[i].toByte().toInt() - 87
-        if (num - 48 <= 9) list.add(num - 48) else list.add(symb)
+        if (str[i] - '0' <= 9) list.add(str[i] - '0') else list.add(str[i] - 'a' + 10)
     }
     return decimal(list, base)
 }

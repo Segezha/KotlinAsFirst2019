@@ -141,15 +141,7 @@ fun maxDivisor(n: Int): Int = n / minDivisor(n)
  * Взаимно простые числа не имеют общих делителей, кроме 1.
  * Например, 25 и 49 взаимно простые, а 6 и 8 -- нет.
  */
-fun isCoPrime(m: Int, n: Int): Boolean {
-    var k = maxOf(m, n)
-    var l = minOf(m, n)
-    while (l != 0) {
-        k %= l
-        l = k.also { k = l }
-    }
-    return k == 1
-}
+fun isCoPrime(m: Int, n: Int): Boolean = gcd(m, n) == 1
 
 /**
  * Простая
@@ -300,4 +292,14 @@ fun fibSequenceDigit(n: Int): Int {
     }
     return if (c == n) fib(k) % 10
     else (fib(k) / 10.0.pow(c - n).toInt()) % 10
+}
+
+fun gcd(m: Int, n: Int): Int {
+    var mx = maxOf(m, n)
+    var mn = minOf(m, n)
+    while (mn != 0) {
+        mx %= mn
+        mn = mx.also { mx = mn }
+    }
+    return mx
 }
