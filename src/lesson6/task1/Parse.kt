@@ -261,7 +261,7 @@ fun mostExpensive(description: String): String {
  */
 fun fromRoman(roman: String): Int {
     val numbers = Regex("""[IVXLCDM]""")
-    if (numbers.findAll(roman, startIndex = 0).toMutableList().size != roman.length) return -1
+    if ((numbers.findAll(roman, startIndex = 0).toMutableList().size != roman.length) || (roman == "")) return -1
     val arabic = roman.toList().map { rom(it) }
     var result = 0
     for (i in 0 until arabic.size - 1) {
@@ -322,6 +322,7 @@ fun computeDeviceCells(cells: Int, commands: String, limit: Int): List<Int> {
     for (i in 0 until commands.length) {
         if (commands[i] == '[') openBracket++
         if (commands[i] == ']') closeBracket++
+        if (closeBracket > openBracket) throw IllegalArgumentException()
     }
     if (openBracket != closeBracket) throw IllegalArgumentException()
     while ((lim < limit) && (strpl < commands.length)) {
