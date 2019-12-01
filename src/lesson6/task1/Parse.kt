@@ -186,6 +186,8 @@ fun bestHighJump(jumps: String): Int {
  */
 fun plusMinus(expression: String): Int {
     val str = expression.split(" ")
+    val symbs = Regex("""-|\+|\d+""")
+    if (symbs.findAll(str.toString(), startIndex = 0).toMutableList().size != str.size) throw IllegalArgumentException()
     val reg = Regex("""\+\d|-\d""")
     if (reg.findAll(str.toString(), startIndex = 0).toList().isNotEmpty()) throw IllegalArgumentException()
     try {
@@ -233,7 +235,7 @@ fun firstDuplicateIndex(str: String): Int {
 fun mostExpensive(description: String): String {
     return try {
         val stuff = description.split("; ")
-        var max = 0.0
+        var max = -1.0
         var name = "none"
         for (i in 0 until stuff.size) {
             val pair = stuff[i].split(" ")
