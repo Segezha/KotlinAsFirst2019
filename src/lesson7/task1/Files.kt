@@ -117,7 +117,8 @@ fun centerFile(inputName: String, outputName: String) {
         if (text[i].length > maxL) maxL = text[i].length
     }
     for (i in 0 until text.size) {
-        val s = maxL / 2 - text[i].length / 2
+        var s = maxL / 2 - text[i].length / 2
+        if (maxL % 2 == 0) s -= 1
         val array = Array(s) { " " }
         text[i] = array.joinToString(separator = "") + text[i]
     }
