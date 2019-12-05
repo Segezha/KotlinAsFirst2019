@@ -116,6 +116,10 @@ fun centerFile(inputName: String, outputName: String) {
         text[i] = text[i].trim()
         if (text[i].length > maxL) maxL = text[i].length
     }
+    if (text.size == 1) {
+        outputStream.write(text[0])
+        outputStream.close()
+    }
     for (i in 0 until text.size) {
         var s = maxL / 2 - text[i].length / 2
         if (maxL % 2 == 0) s -= 1
