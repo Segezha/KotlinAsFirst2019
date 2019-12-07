@@ -110,19 +110,15 @@ fun sibilants(inputName: String, outputName: String) {
  */
 fun centerFile(inputName: String, outputName: String) {
     val outputStream = File(outputName).bufferedWriter()
-    val text = File(inputName).readLines().map { it.trim() }.toMutableList()
-    if (text.isEmpty()) outputStream.write("")
-    if (text.size > 1) {
-        var maxL = 0
-        for (i in 0 until text.size) {
-            if (text[i].length > maxL) maxL = text[i].length
-        }
-        for (i in 0 until text.size) {
-            var s = maxL / 2 - text[i].length / 2
-            if (maxL % 2 == 0) s -= 1
-            val array = Array(s) { " " }
-            text[i] = array.joinToString(separator = "") + text[i]
-        }
+    val text = File(inputName).readLines().toMutableList()
+    var maxL = -1
+    for (i in 0 until text.size) {
+        text[i] = text[i].trim()
+        if (text[i].length > maxL) maxL = text[i].length
+    }
+    for (i in 0 until text.size) {
+        val s = maxL / 2 - text[i].length / 2
+        text[i] = text[i].padStart(s + text[i].length)
     }
     for (i in 0 until text.size) {
         outputStream.write(text[i])
