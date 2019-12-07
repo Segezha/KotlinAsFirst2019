@@ -454,20 +454,21 @@ fun printMultiplicationProcess(lhv: Int, rhv: Int, outputName: String) {
     val lhvs = lhv.toString()
     val rhvs = rhv.toString()
     val result = " " + (lhv * rhv).toString()
+    val width = result.length
     val separate = "-"
     var k = rhv / 10
-    var s = rhvs.length - 2
+    var s = width - 2
     val outputStream = File(outputName).bufferedWriter()
     val lines = mutableListOf<String>()
-    lines += lhvs.padStart(result.length)
-    lines += "*" + rhvs.padStart(rhvs.length + lhvs.length - 1)
-    lines += separate.padStart(result.length, '-')
-    lines += (lhv * (rhv % 10)).toString().padStart(result.length)
+    lines += lhvs.padStart(width)
+    lines += "*" + rhvs.padStart(width - 1)
+    lines += separate.padStart(width, '-')
+    lines += (lhv * (rhv % 10)).toString().padStart(width)
     if (rhv > 9) {
         while (k != 0) {
             val multiplication = (k % 10 * lhv).toString()
-            lines += "+" + multiplication.padStart(s + multiplication.length)
-            s -= 1
+            lines += "+" + multiplication.padStart(s)
+            s--
             k /= 10
         }
     }
