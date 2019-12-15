@@ -515,11 +515,13 @@ fun printDivisionProcess(lhv: Int, rhv: Int, outputName: String) {
     val separate = "-" //Разделительная черта
     lines += " $lhvs | $rhvs"
     if (lhv / rhv == 0) {
+        if (lhv > 9) lines[0].trim()
         lines += "-0".padStart(lhvs.length + 1).padEnd(lhvs.length + 4) + result.joinToString(separator = "")
         lines += separate.padStart(maxOf(2, lhvs.length), '-')
         lines += " $lhvs"
     } else {
         var reducer = (result[0].toInt() * rhv).toString() //Вычитаемое
+        if (reducer.length + 1 <= lhvs.length) lines[0].trim()
         lines += "-$reducer".padEnd(lhvs.length + 4) + result.joinToString(separator = "")
         lines += separate.padStart(reducer.length + 1, '-')
         for (i in 0 until reducer.length) {
