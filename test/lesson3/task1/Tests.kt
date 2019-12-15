@@ -71,6 +71,7 @@ class Tests {
         assertEquals(2, digitNumber(99))
         assertEquals(3, digitNumber(123))
         assertEquals(10, digitNumber(Int.MAX_VALUE))
+        assertEquals(1, digitNumber(-1))
     }
 
     @Test
@@ -134,6 +135,7 @@ class Tests {
     @Tag("Easy")
     fun isCoPrime() {
         assertTrue(isCoPrime(25, 49))
+        assertTrue(isCoPrime(1, 1))
         assertFalse(isCoPrime(6, 8))
         assertTrue(isCoPrime(17, 97))
         assertFalse(isCoPrime(37, 111))
@@ -203,6 +205,7 @@ class Tests {
         assertEquals(111, revert(111))
         assertEquals(17571, revert(17571))
         assertEquals(123456789, revert(987654321))
+        assertEquals(749621141, revert(141126947))
     }
 
     @Test
@@ -223,6 +226,7 @@ class Tests {
         assertFalse(hasDifferentDigits(0))
         assertFalse(hasDifferentDigits(777))
         assertTrue(hasDifferentDigits(31122))
+        assertFalse(hasDifferentDigits(1))
     }
 
     @Test

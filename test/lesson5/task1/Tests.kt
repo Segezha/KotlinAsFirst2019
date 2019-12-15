@@ -97,6 +97,10 @@ class Tests {
             buildWordSet(listOf()),
             mutableSetOf<String>()
         )
+        assertEquals(
+            buildWordSet(", f j".split(" ")),
+            mutableSetOf("j", "f", ",")
+        )
     }
 
     @Test
@@ -155,6 +159,14 @@ class Tests {
             emptyList<String>(),
             whoAreInBoth(listOf("Marat", "Mikhail"), listOf("Sveta", "Kirill"))
         )
+        assertEquals(
+            listOf("Марат"),
+            whoAreInBoth(listOf("Марат", "Семён", "Марат"), listOf("Марат", "Марат"))
+        )
+        assertEquals(
+            listOf(""),
+            whoAreInBoth(listOf("", ""), listOf(""))
+        )
     }
 
     @Test
@@ -194,16 +206,16 @@ class Tests {
     @Tag("Normal")
     fun averageStockPrice() {
         assertEquals(
+            mapOf("MSFT" to 150.0, "NFLX" to 40.0),
+            averageStockPrice(listOf("MSFT" to 100.0, "MSFT" to 200.0, "NFLX" to 40.0))
+        )
+        assertEquals(
             mapOf<String, Double>(),
             averageStockPrice(listOf())
         )
         assertEquals(
             mapOf("MSFT" to 100.0, "NFLX" to 40.0),
             averageStockPrice(listOf("MSFT" to 100.0, "NFLX" to 40.0))
-        )
-        assertEquals(
-            mapOf("MSFT" to 150.0, "NFLX" to 40.0),
-            averageStockPrice(listOf("MSFT" to 100.0, "MSFT" to 200.0, "NFLX" to 40.0))
         )
         assertEquals(
             mapOf("MSFT" to 150.0, "NFLX" to 45.0),
@@ -232,9 +244,10 @@ class Tests {
     @Test
     @Tag("Normal")
     fun canBuildFrom() {
-        assertFalse(canBuildFrom(emptyList(), "foo"))
         assertTrue(canBuildFrom(listOf('a', 'b', 'o'), "baobab"))
+        assertFalse(canBuildFrom(emptyList(), "foo"))
         assertFalse(canBuildFrom(listOf('a', 'm', 'r'), "Marat"))
+        assertTrue(canBuildFrom(listOf('k'), "K"))
     }
 
     @Test
@@ -243,6 +256,10 @@ class Tests {
         assertEquals(
             emptyMap<String, Int>(),
             extractRepeats(emptyList())
+        )
+        assertEquals(
+            mapOf("a" to 3),
+            extractRepeats(listOf("a", "a", "a"))
         )
         assertEquals(
             mapOf("a" to 2),
@@ -309,6 +326,10 @@ class Tests {
             Pair(-1, -1),
             findSumOfTwo(listOf(1, 2, 3), 6)
         )
+        assertEquals(
+            Pair(0, 2),
+            findSumOfTwo(listOf(2, 3, 2), 4)
+        )
     }
 
     @Test
@@ -331,4 +352,22 @@ class Tests {
     }
 
     // TODO: map task tests
+
+
+    @Test
+    @Tag("Impossible")
+    fun myFun() {
+        assertEquals(
+            listOf("Баранов" to "12:28", "Зайцев" to "13:00", "Волков" to "14:48"),
+            myFun("Баранов 12:28, Волков 14:48, Зайцев 13:00")
+        )
+        assertEquals(
+            listOf("Баранов" to "12:28", "Зайцев" to "13:00", "Волков" to "14:48"),
+            myFun("Баранов 12:28, Волков   14:48, Зайцев      13:00")
+        )
+        assertEquals(
+            listOf("Баранов" to "12:28", "Зайцев" to "13:00", "Котов" to "13:00", "Волков" to "14:48"),
+            myFun("Баранов 12:28, Волков 14:48, Котов 13:00, Зайцев 13:00")
+        )
+    }
 }
