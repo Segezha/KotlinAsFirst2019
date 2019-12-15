@@ -527,7 +527,9 @@ fun printDivisionProcess(lhv: Int, rhv: Int, outputName: String) {
         }
         lhvpos = revert(lhv) / 10.0.pow(reducer.length).toInt()
         rest = (rest.toInt() - reducer.toInt()).toString() + (lhvpos % 10).toString()
-        lines += rest.padStart(reducer.length + 2)
+        lines += if (lhvs == rhvs)
+            (rest[0].toString()).padStart(reducer.length + 1) else
+            rest.padStart(reducer.length + 2)
         if (lhv / rhv > 9) {
             for (i in 1 until result.size) {
                 lhvpos /= 10
