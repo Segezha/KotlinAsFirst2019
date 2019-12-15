@@ -535,7 +535,7 @@ fun printDivisionProcess(lhv: Int, rhv: Int, outputName: String) {
                 lhvpos /= 10
                 reducer = (result[i].toInt() * rhv).toString()
                 lines += "-$reducer".padStart(lines.last().length)
-                lines += separate.padStart(reducer.length + 1, '-').padStart(lines.last().length)
+                lines += separate.padStart(maxOf(rest.length, reducer.length + 1), '-').padStart(lines.last().length)
                 rest = (rest.toInt() - reducer.toInt()).toString() + (lhvpos % 10).toString()
                 lines += if ((i == result.size - 1)) // && (lhv % rhv <= 9))
                     ((rest.toInt() / 10).toString()).padStart(lines.last().length) else
