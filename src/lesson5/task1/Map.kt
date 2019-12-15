@@ -350,3 +350,26 @@ fun findSumOfTwo(list: List<Int>, number: Int): Pair<Int, Int> {
  *   ) -> emptySet()
  */
 fun bagPacking(treasures: Map<String, Pair<Int, Int>>, capacity: Int): Set<String> = TODO()
+
+
+fun myFun(text: String): Collection<Any> {
+    val results = text.split(", ")
+    val seconds = mutableListOf<Pair<String, Int>>()
+    for (i in 0 until results.size) {
+        val res = results[i].split(""" +""".toRegex())
+        seconds += (res[0] to toSeconds(res[1]))
+    }
+    val sorted = seconds.sortedBy { it.first }.sortedBy { it.second }
+    return sorted.map { it.first to fromSeconds(it.second) }
+}
+
+fun toSeconds(time: String): Int {
+    val spl = time.trim().split(":")
+    return spl[0].toInt() * 60 + spl[1].toInt()
+}
+
+fun fromSeconds(time: Int): String {
+    val min = time / 60
+    val sec = time % 60
+    return String.format("%02d:%02d", min, sec)
+}

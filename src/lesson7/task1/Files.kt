@@ -3,7 +3,9 @@
 package lesson7.task1
 
 import com.sun.xml.internal.fastinfoset.util.StringArray
+import lesson3.task1.revert
 import java.io.File
+import kotlin.math.pow
 
 /**
  * Пример
@@ -503,7 +505,47 @@ fun printMultiplicationProcess(lhv: Int, rhv: Int, outputName: String) {
  *
  */
 fun printDivisionProcess(lhv: Int, rhv: Int, outputName: String) {
-    TODO()
+    val outputStream = File(outputName).bufferedWriter()
+    val lines = mutableListOf<String>()
+    val lhvs = lhv.toString() //Строковое значение делимого
+    var lhvpos: Int //Приписываемые к остатку числа
+    val rhvs = rhv.toString() //Строковое значение делителя
+    val result = (lhv / rhv).toString().toMutableList().map { it.toString() } //Строковое значение частного
+    var rest = "" //Остаток
+    val separate = "-" //Разделительная черта
+    lines += " $lhvs | $rhvs"
+    if (lhv / rhv == 0) {
+        lines += "-0".padStart(lhvs.length + 1).padEnd(lhvs.length + 4) + result.joinToString(separator = "")
+        lines += separate.padStart(maxOf(2, lhvs.length), '-')
+        lines += " $lhvs"
+    } else {
+        var reducer = (result[0].toInt() * rhv).toString() //Вычитаемое
+        lines += "-$reducer".padEnd(lhvs.length + 4) + result.joinToString(separator = "")
+        lines += separate.padStart(reducer.length + 1, '-')
+        for (i in 0 until reducer.length) {
+            rest += lhvs[i]
+        }
+        lhvpos = revert(lhv) / 10.0.pow(reducer.length).toInt()
+        rest = (rest.toInt() - reducer.toInt()).toString() + (lhvpos % 10).toString()
+        lines += rest.padStart(reducer.length + 2)
+        if (lhv / rhv > 9) {
+            for (i in 1 until result.size) {
+                lhvpos /= 10
+                reducer = (result[i].toInt() * rhv).toString()
+                lines += "-$reducer".padStart(lines.last().length)
+                lines += separate.padStart(reducer.length + 1, '-').padStart(lines.last().length)
+                rest = (rest.toInt() - reducer.toInt()).toString() + (lhvpos % 10).toString()
+                lines += if (i == result.size - 1)
+                    (rest[0].toString()).padStart(lines.last().length) else
+                    rest.padStart(lines.last().length + 1)
+            }
+        }
+    }
+    for (i in 0 until lines.size) {
+        outputStream.write(lines[i])
+        outputStream.newLine()
+    }
+    outputStream.close()
 }
 
 fun spaces(strI: String, max: Int): String {
