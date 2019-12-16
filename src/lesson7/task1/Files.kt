@@ -166,7 +166,7 @@ fun alignFileByWidth(inputName: String, outputName: String) {
         if (text[i].length > maxL) maxL = text[i].length
     }
     for (i in 0 until text.size) {
-        if (text[i].split(" ").isNotEmpty())
+        if ((text[i].split(" ").isNotEmpty()) && (text[i].length != maxL))
             text[i] = spaces(text[i], maxL)
     }
     for (i in 0 until text.size) {
@@ -516,9 +516,9 @@ fun printDivisionProcess(lhv: Int, rhv: Int, outputName: String) {
     lines += " $lhvs | $rhvs"
     if (lhv / rhv == 0) {
         if (lhv > 9) lines[0] = "$lhvs | $rhvs"
-        lines += "-0".padStart(lhvs.length + 1).padEnd(lhvs.length + 4) + result.joinToString(separator = "")
+        lines += "-0".padStart(lhvs.length).padEnd(lhvs.length + 4) + result.joinToString(separator = "")
         lines += separate.padStart(maxOf(2, lhvs.length), '-')
-        lines += " $lhvs"
+        lines += lhvs.padStart(lines[2].length)
     } else {
         var reducer = (result[0].toInt() * rhv).toString() //Вычитаемое
         if (reducer.length + 1 <= lhvs.length) lines[0].trim()
