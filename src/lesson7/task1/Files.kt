@@ -515,7 +515,7 @@ fun printDivisionProcess(lhv: Int, rhv: Int, outputName: String) {
     val separate = "-" //Разделительная черта
     lines += " $lhvs | $rhvs"
     if (lhv / rhv == 0) {
-        if (lhv > 9) lines[0].trim()
+        if (lhv > 9) lines[0] = "$lhvs | $rhvs"
         lines += "-0".padStart(lhvs.length + 1).padEnd(lhvs.length + 4) + result.joinToString(separator = "")
         lines += separate.padStart(maxOf(2, lhvs.length), '-')
         lines += " $lhvs"
@@ -562,6 +562,7 @@ fun spaces(strI: String, max: Int): String {
         for (i in 0 until str.size - 1) {
             str[i] += x
         }
+        if (str.size == 2) str[0] += " "
         for (i in 0 until mod) {
             str[i] += " "
         }
