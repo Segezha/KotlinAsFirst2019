@@ -516,7 +516,7 @@ fun printDivisionProcess(lhv: Int, rhv: Int, outputName: String) {
     var reducer = (result[0].toInt() * rhv).toString() //Вычитаемое
     if ((result.size == 1) && (reducer.length + 1 <= lhvs.length)) {
         lines += "$lhvs | $rhvs"
-        lines += "-$reducer".padStart(lhvs.length).padEnd(lhvs.length + 4) + result.joinToString(separator = "")
+        lines += "-$reducer".padStart(lhvs.length).padEnd(lhvs.length + 3) + result.joinToString(separator = "")
         lines += separate.padStart(maxOf(2, lhvs.length), '-')
         lines += lhvs.padStart(lines[2].length)
     } else {
