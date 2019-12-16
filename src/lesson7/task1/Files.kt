@@ -554,7 +554,7 @@ fun printDivisionProcess(lhv: Int, rhv: Int, outputName: String) {
 
 fun spaces(strI: String, max: Int): String {
     val v = max - strI.length
-    val str = strI.split(" ").toMutableList()
+    val str = strI.split(""" +""".toRegex()).toMutableList()
     if (str.size != 1) {
         val div = v / (str.size - 1)
         val x = buildString { (1..div).forEach { _ -> append(" ") } }
