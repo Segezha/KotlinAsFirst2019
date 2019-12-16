@@ -513,15 +513,15 @@ fun printDivisionProcess(lhv: Int, rhv: Int, outputName: String) {
     val result = (lhv / rhv).toString().toMutableList().map { it.toString() } //Строковое значение частного
     var rest = "" //Остаток
     val separate = "-" //Разделительная черта
-    lines += " $lhvs | $rhvs"
-    if (lhv / rhv == 0) {
-        if (lhv > 9) lines[0] = "$lhvs | $rhvs"
-        lines += "-0".padStart(lhvs.length).padEnd(lhvs.length + 4) + result.joinToString(separator = "")
-        lines += separate.padStart(maxOf(2, lhvs.length), '-')
-        lines += lhvs.padStart(lines[2].length)
-    } else {
-        var reducer = (result[0].toInt() * rhv).toString() //Вычитаемое
-        if (reducer.length + 1 <= lhvs.length) lines[0].trim()
+    var reducer = (result[0].toInt() * rhv).toString() //Вычитаемое
+    if (reducer.length + 1 == lhvs.length) lines += "$lhvs | $rhvs" else
+        lines += " $lhvs | $rhvs"
+    //if (lhv / rhv == 0) {
+    //    if (lhv > 9) lines[0] = "$lhvs | $rhvs"
+    //    lines += "-0".padStart(lhvs.length).padEnd(lhvs.length + 4) + result.joinToString(separator = "")
+    //    lines += separate.padStart(maxOf(2, lhvs.length), '-')
+    //    lines += lhvs.padStart(lines[2].length)
+    //} else {
         lines += "-$reducer".padEnd(lhvs.length + 4) + result.joinToString(separator = "")
         lines += separate.padStart(reducer.length + 1, '-')
         for (i in 0 until reducer.length) {
@@ -544,7 +544,7 @@ fun printDivisionProcess(lhv: Int, rhv: Int, outputName: String) {
                     rest.padStart(lines.last().length + 1)
             }
         }
-    }
+    //}
     for (i in 0 until lines.size) {
         outputStream.write(lines[i])
         outputStream.newLine()
@@ -562,7 +562,6 @@ fun spaces(strI: String, max: Int): String {
         for (i in 0 until str.size - 1) {
             str[i] += x
         }
-        if (str.size == 2) str[0] += " "
         for (i in 0 until mod) {
             str[i] += " "
         }
