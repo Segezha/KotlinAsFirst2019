@@ -514,7 +514,7 @@ fun printDivisionProcess(lhv: Int, rhv: Int, outputName: String) {
     var rest = "" //Остаток
     val separate = "-" //Разделительная черта
     var reducer = (result[0].toInt() * rhv).toString() //Вычитаемое
-    if ((lhv / rhv < 10) && (reducer.length + 1 == lhvs.length)) {
+    if ((result.size == 1) && (reducer.length + 1 <= lhvs.length)) {
         lines += "$lhvs | $rhvs"
         lines += "-$reducer".padStart(lhvs.length).padEnd(lhvs.length + 4) + result.joinToString(separator = "")
         lines += separate.padStart(maxOf(2, lhvs.length), '-')
