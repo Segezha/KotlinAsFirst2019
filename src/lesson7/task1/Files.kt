@@ -162,7 +162,7 @@ fun alignFileByWidth(inputName: String, outputName: String) {
     val text = File(inputName).readLines().map { it.trim() }.toMutableList()
     var maxL = -1
     for (i in 0 until text.size) {
-        (text[i].split(" ").map { it.trim() }).joinToString(separator = " ")
+        text[i].split(""" +""".toRegex()).joinToString(separator = " ")
         if (text[i].length > maxL) maxL = text[i].length
     }
     for (i in 0 until text.size) {
