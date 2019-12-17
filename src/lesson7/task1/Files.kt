@@ -564,6 +564,8 @@ fun spaces(strI: String, max: Int): String {
         for (i in 0 until mod) {
             str[i] += " "
         }
+        if ((max % 2 == 0) && (str.size == 2) && (strI.length % 2 == 1) && (str.joinToString(separator = " ").length < max))
+            str[0] += " "
     }
     return str.joinToString(separator = " ")
 }
