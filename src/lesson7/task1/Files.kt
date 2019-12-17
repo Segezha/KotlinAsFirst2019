@@ -518,7 +518,7 @@ fun printDivisionProcess(lhv: Int, rhv: Int, outputName: String) {
         lines += "$lhvs | $rhvs"
         lines += "-$reducer".padStart(lhvs.length).padEnd(lhvs.length + 3) + result.joinToString(separator = "")
         lines += separate.padStart(maxOf(2, lhvs.length), '-')
-        lines += lhvs.padStart(lines[2].length)
+        lines += (lhv - reducer.toInt()).toString().padStart(lines[2].length)
     } else {
         lines += " $lhvs | $rhvs"
         lines += "-$reducer".padEnd(lhvs.length + 4) + result.joinToString(separator = "")
@@ -557,15 +557,12 @@ fun spaces(strI: String, max: Int): String {
     if (str.size != 1) {
         val div = v / (str.size - 1)
         val x = buildString { (0..div).forEach { _ -> append(" ") } }
-        var mod = v % (str.size - 1)
+        val mod = v % (str.size - 1)
         for (i in 0 until str.size - 1) {
             str[i] += x
         }
-        var i = 0
-        while (mod != 0) {
+        for (i in 0 until mod) {
             str[i] += " "
-            i++
-            mod--
         }
     }
     return str.joinToString(separator = "")
