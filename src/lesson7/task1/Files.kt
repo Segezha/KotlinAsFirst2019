@@ -552,20 +552,14 @@ fun printDivisionProcess(lhv: Int, rhv: Int, outputName: String) {
 }
 
 fun spaces(strI: String, max: Int): String {
-    val v = max - strI.length
     val str = strI.split(""" +""".toRegex()).toMutableList()
     if (str.size != 1) {
-        val div = v / (str.size - 1)
-        val x = buildString { (1..div).forEach { _ -> append(" ") } }
-        val mod = v % (str.size - 1)
-        for (i in 0 until str.size - 1) {
-            str[i] += x
-        }
-        for (i in 0 until mod) {
+        var i = 0
+        while (str.joinToString(separator = "").length != max) {
             str[i] += " "
+            i++
+            if (i == str.size - 1) i = 0
         }
-        if ((max % 2 == 0) && (str.size == 2) && (strI.length % 2 == 1) && (str.joinToString(separator = " ").length < max))
-            str[0] += " "
     }
-    return str.joinToString(separator = " ")
+    return str.joinToString(separator = "")
 }
