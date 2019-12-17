@@ -556,14 +556,17 @@ fun spaces(strI: String, max: Int): String {
     val str = strI.split(""" +""".toRegex()).toMutableList()
     if (str.size != 1) {
         val div = v / (str.size - 1)
-        val x = buildString { (1..div).forEach { _ -> append(" ") } }
-        val mod = v % (str.size - 1)
+        val x = buildString { (0..div).forEach { _ -> append(" ") } }
+        var mod = v % (str.size - 1)
         for (i in 0 until str.size - 1) {
             str[i] += x
         }
-        for (i in 0 until mod) {
+        var i = 0
+        while (mod != 0) {
             str[i] += " "
+            i++
+            mod--
         }
     }
-    return str.joinToString(separator = " ")
+    return str.joinToString(separator = "")
 }

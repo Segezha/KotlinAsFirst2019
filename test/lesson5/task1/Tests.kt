@@ -355,7 +355,7 @@ class Tests {
 
 
     @Test
-    @Tag("Impossible")
+    @Tag("Normal")
     fun myFun() {
         assertEquals(
             listOf("Баранов" to "12:28", "Зайцев" to "13:00", "Волков" to "14:48"),
