@@ -106,7 +106,22 @@ data class Segment(val begin: Point, val end: Point) {
  * Дано множество точек. Вернуть отрезок, соединяющий две наиболее удалённые из них.
  * Если в множестве менее двух точек, бросить IllegalArgumentException
  */
-fun diameter(vararg points: Point): Segment = TODO()
+fun diameter(vararg points: Point): Segment {
+    if (points.size < 2) throw IllegalArgumentException()
+    var ptsF = Point(0.0, 0.0)
+    var ptsS = Point(0.0, 0.0)
+    var max = 0.0
+    for (i in 0 until points.size){
+        for (j in 0 until points.size) {
+            if (points[i].distance(points[j]) > max) {
+                ptsF = points[i]
+                ptsS = points[j]
+                max = points[i].distance(points[j])
+            }
+        }
+    }
+    return Segment(ptsF, ptsS)
+}
 
 /**
  * Простая
@@ -171,6 +186,7 @@ fun lineBySegment(s: Segment): Line = TODO()
  * Построить прямую по двум точкам
  */
 fun lineByPoints(a: Point, b: Point): Line = TODO()
+
 
 /**
  * Сложная
