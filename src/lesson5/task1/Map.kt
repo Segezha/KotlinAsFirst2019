@@ -359,21 +359,24 @@ fun bagPacking(treasures: Map<String, Pair<Int, Int>>, capacity: Int): Set<Strin
         weight += treasuresList[i].second.first
         purchase += treasuresList[i].second.second
     }
-    for (i in 1..treasures.size) {
-        for (k in 1..capacity) {
-            if (k >= weight[i - 1]) whole[i][k] =
-                maxOf(whole[i - 1][k], whole[i - 1][k - weight[i - 1]] + purchase[i - 1])
-            else whole[i][k] = whole[i - 1][k]
+    if ((treasures.size == 1) && (weight[0] <= capacity)) answer.add(treasuresList[0].first)
+    else{
+        for (i in 1..treasures.size) {
+            for (k in 1..capacity) {
+                if (k >= weight[i - 1]) whole[i][k] =
+                    maxOf(whole[i - 1][k], whole[i - 1][k - weight[i - 1]] + purchase[i - 1])
+                else whole[i][k] = whole[i - 1][k]
+            }
         }
-    }
-    var cap = capacity
-    var num = treasures.size
-    while (num > 0) {
-        if (whole[num][cap] != whole[num - 1][cap]) {
-            answer.add(treasuresList[num - 1].first)
-            cap -= weight[num]
+        var cap = capacity
+        var num = treasures.size
+        while (num > 0) {
+            if (whole[num][cap] != whole[num - 1][cap]) {
+                answer.add(treasuresList[num - 1].first)
+                cap -= weight[num]
+            }
+            num--
         }
-        num--
     }
     return answer
 }
