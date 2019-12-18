@@ -360,7 +360,7 @@ fun bagPacking(treasures: Map<String, Pair<Int, Int>>, capacity: Int): Set<Strin
         purchase += treasuresList[i].second.second
     }
     if ((treasures.size == 1) && (weight[0] <= capacity)) answer.add(treasuresList[0].first)
-    else{
+    else {
         for (i in 1..treasures.size) {
             for (k in 1..capacity) {
                 if (k >= weight[i - 1]) whole[i][k] =

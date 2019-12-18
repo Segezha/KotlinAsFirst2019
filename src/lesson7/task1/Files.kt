@@ -2,7 +2,6 @@
 
 package lesson7.task1
 
-import com.sun.xml.internal.fastinfoset.util.StringArray
 import lesson3.task1.revert
 import java.io.File
 import kotlin.math.pow
