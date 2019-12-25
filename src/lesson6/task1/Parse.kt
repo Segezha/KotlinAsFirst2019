@@ -120,15 +120,9 @@ fun dateDigitToStr(digital: String): String {
  * PS: Дополнительные примеры работы функции можно посмотреть в соответствующих тестах.
  */
 fun flattenPhoneNumber(phone: String): String {
-    val checker = Regex("""[+0-9\-() ]""")
-    if (checker.findAll(phone, startIndex = 0).toMutableList().size != phone.length) return ""
-    for (i in 0 until phone.length - 1) {
-        if ((phone[i] == '(') && (phone[i + 1] == ')')) return ""
-    }
-    val alphabet = Regex("""\+|\d+?""")
-    val number = alphabet.findAll(phone, startIndex = 0).toMutableList()
-    val result = number.map { it.value }
-    return result.joinToString(separator = "")
+    val checker = Regex("""(\+)?[-0-9 ]+(\([-0-9 ]+\))?[-0-9 ]+""")
+    return if (phone.matches(checker)) """[-() ]""".toRegex().replace(phone, "")
+    else ""
 }
 
 /**
@@ -142,8 +136,8 @@ fun flattenPhoneNumber(phone: String): String {
  * При нарушении формата входной строки или при отсутствии в ней чисел, вернуть -1.
  */
 fun bestLongJump(jumps: String): Int {
-    val attempts = Regex("""[0-9\-% ]""")
-    if (attempts.findAll(jumps, startIndex = 0).toMutableList().size != jumps.length) return -1
+    val attempts = Regex("""[-%\d ]+""")
+    if (!jumps.matches(attempts)) return -1
     var result = -1
     val list = jumps.split(" ")
     for (i in 0 until list.size) {
@@ -163,17 +157,7 @@ fun bestLongJump(jumps: String): Int {
  * При нарушении формата входной строки, а также в случае отсутствия удачных попыток,
  * вернуть -1.
  */
-fun bestHighJump(jumps: String): Int {
-    val attempts = Regex("""[0-9\-+% ]""")
-    if (attempts.findAll(jumps, startIndex = 0).toMutableList().size != jumps.length) return -1
-    var result = -1
-    val list = jumps.split(" ")
-    for (i in 0 until list.size) {
-        if ((list[i].toIntOrNull() != null) && (list[i].toInt() > result) && (list[i + 1] == "+"))
-            result = list[i].toInt()
-    }
-    return result
-}
+fun bestHighJump(jumps: String): Int = TODO()
 
 /**
  * Сложная
@@ -232,23 +216,7 @@ fun firstDuplicateIndex(str: String): Int {
  * или пустую строку при нарушении формата строки.
  * Все цены должны быть больше либо равны нуля.
  */
-fun mostExpensive(description: String): String {
-    return try {
-        val stuff = description.split("; ")
-        var max = -1.0
-        var name = "none"
-        for (i in 0 until stuff.size) {
-            val pair = stuff[i].split(" ")
-            if (pair[1].toDouble() > max) {
-                name = pair[0]
-                max = pair[1].toDouble()
-            }
-        }
-        name
-    } catch (e: Exception) {
-        ""
-    }
-}
+fun mostExpensive(description: String): String = TODO()
 
 /**
  * Сложная
