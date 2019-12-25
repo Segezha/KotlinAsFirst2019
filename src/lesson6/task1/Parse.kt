@@ -169,21 +169,15 @@ fun bestHighJump(jumps: String): Int = TODO()
  * Про нарушении формата входной строки бросить исключение IllegalArgumentException
  */
 fun plusMinus(expression: String): Int {
-    val str = expression.split(" ")
-    val symbs = Regex("""-|\+|\d+""")
-    if (symbs.findAll(str.toString(), startIndex = 0).toMutableList().size != str.size) throw IllegalArgumentException()
-    val reg = Regex("""\+\d|-\d""")
-    if (reg.findAll(str.toString(), startIndex = 0).toList().isNotEmpty()) throw IllegalArgumentException()
-    try {
-        var result = str[0].toInt()
-        for (i in 1 until str.size - 1) {
-            if (str[i] == "+") result += str[i + 1].toInt()
-            if (str[i] == "-") result -= str[i + 1].toInt()
-        }
-        return result
-    } catch (e: Exception) {
-        throw IllegalArgumentException()
+    val symbs = Regex("""\d+( +[-+] +\d+)*""")
+    if (!expression.matches(symbs)) throw IllegalArgumentException()
+    val str = expression.split(""" +""".toRegex())
+    var result = str[0].toInt()
+    for (i in 1 until str.size - 1) {
+        if (str[i] == "+") result += str[i + 1].toInt()
+        if (str[i] == "-") result -= str[i + 1].toInt()
     }
+    return result
 }
 
 /**
@@ -216,7 +210,23 @@ fun firstDuplicateIndex(str: String): Int {
  * или пустую строку при нарушении формата строки.
  * Все цены должны быть больше либо равны нуля.
  */
-fun mostExpensive(description: String): String = TODO()
+fun mostExpensive(description: String): String {
+    return try {
+        val stuff = description.split("; ")
+        var max = -1.0
+        var name = ""
+        for (i in 0 until stuff.size) {
+            val pair = stuff[i].split(" ")
+            if (pair[1].toDouble() > max) {
+                name = pair[0]
+                max = pair[1].toDouble()
+            }
+        }
+        name
+    } catch (e: Exception) {
+        ""
+    }
+}
 
 /**
  * Сложная

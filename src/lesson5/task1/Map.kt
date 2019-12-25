@@ -92,17 +92,11 @@ fun buildWordSet(text: List<String>): MutableSet<String> {
  *     -> mapOf(5 to listOf("Семён", "Михаил"), 3 to listOf("Марат"))
  */
 fun buildGrades(grades: Map<String, Int>): Map<Int, List<String>> {
-    val fullMap = mutableMapOf<Int, List<String>>()
-    val set = mutableSetOf<Int>()
-    for ((_, value) in grades) {
-        set += value
-    }
-    for (i in set) {
-        val list = mutableListOf<String>()
-        for ((key, value) in grades) {
-            if (value == i) list += key
-        }
-        fullMap += (i to list)
+    val fullMap = mutableMapOf<Int, MutableList<String>>()
+    for (i in grades) {
+        if (i.value !in fullMap.keys) {
+            fullMap[i.value] = mutableListOf(i.key)
+        } else fullMap[i.value]?.plusAssign(i.key)
     }
     return fullMap
 }
@@ -148,7 +142,9 @@ fun subtractOf(a: MutableMap<String, String>, b: Map<String, String>) {
  */
 fun whoAreInBoth(a: List<String>, b: List<String>): List<String> {
     val set = mutableSetOf<String>()
-    a.map { if (b.contains(it)) set += it }
+    for (i in a) {
+        if (i in b) set += i
+    }
     return set.toList()
 }
 
