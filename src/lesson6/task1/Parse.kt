@@ -120,8 +120,9 @@ fun dateDigitToStr(digital: String): String {
  * PS: Дополнительные примеры работы функции можно посмотреть в соответствующих тестах.
  */
 fun flattenPhoneNumber(phone: String): String {
-    val checker = Regex("""(\+)?[-0-9 ]+(\([-0-9 ]+\))?[-0-9 ]+""")
-    return if (phone.matches(checker)) """[-() ]""".toRegex().replace(phone, "")
+    val filter = phone.filter { (it != '-') && (it != ' ') }
+    val checker = Regex("""(\+[0-9]+)?(\([0-9]+\))?[0-9]+""")
+    return if (filter.matches(checker)) """[-() ]""".toRegex().replace(phone, "")
     else ""
 }
 
