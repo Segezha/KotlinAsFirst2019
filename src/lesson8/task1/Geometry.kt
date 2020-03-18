@@ -111,7 +111,7 @@ fun diameter(vararg points: Point): Segment {
     var ptsF = Point(0.0, 0.0)
     var ptsS = Point(0.0, 0.0)
     var max = 0.0
-    for (i in 0 until points.size){
+    for (i in 0 until points.size) {
         for (j in 0 until points.size) {
             if (points[i].distance(points[j]) > max) {
                 ptsF = points[i]

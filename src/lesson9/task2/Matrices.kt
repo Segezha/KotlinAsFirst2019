@@ -4,6 +4,7 @@ package lesson9.task2
 
 import lesson9.task1.Matrix
 import lesson9.task1.createMatrix
+import java.lang.IllegalArgumentException
 
 // Все задачи в этом файле требуют наличия реализации интерфейса "Матрица" в Matrix.kt
 
@@ -104,7 +105,15 @@ fun generateSnake(height: Int, width: Int): Matrix<Int> = TODO()
  * 4 5 6      8 5 2
  * 7 8 9      9 6 3
  */
-fun <E> rotate(matrix: Matrix<E>): Matrix<E> = TODO()
+fun <E> rotate(matrix: Matrix<E>): Matrix<E> {
+    if (matrix.width != matrix.height) throw IllegalArgumentException()
+    val result = createMatrix(height = matrix.width, width = matrix.height, e = matrix[0, 0])
+    for (i in 0 until matrix.height) {
+        for (j in 0 until matrix.height)
+            result[j, matrix.height - 1 - i] = matrix[i, j]
+    }
+    return result
+}
 
 /**
  * Сложная
