@@ -196,12 +196,14 @@ fun accumulate(list: MutableList<Int>): MutableList<Int> {
 fun factorize(n: Int): List<Int> {
     val list = mutableListOf<Int>()
     var a = n
+    var div = 2
     while (a > 1) {
-        val div = minDivisor(a)
-        list.add(div)
-        a /= div
+        if (a % div == 0) {
+            list += div
+            a /= div
+        } else div++
     }
-    return list.sorted()
+    return list
 }
 
 /**

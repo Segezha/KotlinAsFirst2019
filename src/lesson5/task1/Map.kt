@@ -92,17 +92,11 @@ fun buildWordSet(text: List<String>): MutableSet<String> {
  *     -> mapOf(5 to listOf("Семён", "Михаил"), 3 to listOf("Марат"))
  */
 fun buildGrades(grades: Map<String, Int>): Map<Int, List<String>> {
-    val fullMap = mutableMapOf<Int, List<String>>()
-    val set = mutableSetOf<Int>()
-    for ((_, value) in grades) {
-        set += value
-    }
-    for (i in set) {
-        val list = mutableListOf<String>()
-        for ((key, value) in grades) {
-            if (value == i) list += key
-        }
-        fullMap += (i to list)
+    val fullMap = mutableMapOf<Int, MutableList<String>>()
+    for (i in grades) {
+        if (i.value !in fullMap.keys) {
+            fullMap[i.value] = mutableListOf(i.key)
+        } else fullMap[i.value]?.plusAssign(i.key)
     }
     return fullMap
 }
@@ -133,9 +127,10 @@ fun containsIn(a: Map<String, String>, b: Map<String, String>): Boolean = b + a 
  *   subtractOf(a = mutableMapOf("a" to "z"), mapOf("a" to "z"))
  *     -> a changes to mutableMapOf() aka becomes empty
  */
-fun subtractOf(a: MutableMap<String, String>, b: Map<String, String>): MutableMap<String, String> {
-    b.map { (k, v) -> a.remove(k, v) }
-    return a
+fun subtractOf(a: MutableMap<String, String>, b: Map<String, String>) {
+    for ((k, v) in b) {
+        a.remove(k, v)
+    }
 }
 
 /**
@@ -147,7 +142,10 @@ fun subtractOf(a: MutableMap<String, String>, b: Map<String, String>): MutableMa
  */
 fun whoAreInBoth(a: List<String>, b: List<String>): List<String> {
     val set = mutableSetOf<String>()
-    a.map { if (b.contains(it)) set += it }
+    val setB = b.toSet()
+    for (i in a) {
+        if (i in setB) set += i
+    }
     return set.toList()
 }
 
@@ -185,21 +183,7 @@ fun mergePhoneBooks(mapA: Map<String, String>, mapB: Map<String, String>): Map<S
  *     -> mapOf("MSFT" to 150.0, "NFLX" to 40.0)
  */
 fun averageStockPrice(stockPrices: List<Pair<String, Double>>): Map<String, Double> = TODO()
-//{
-//    val map = stockPrices.toMap()
-//    val average = mutableMapOf<String, Double>()
-//    val sum = mutableMapOf<String, Double>()
-//    map.map { (k, _) ->
-//        if (k in sum.keys) sum[k] = sum[k]!!.plus(1.0) else sum += k to 1.0
-//    }
-//    map.map { (k, v) ->
-//        if (k in average.keys) average[k] = average[k]!!.plus(v) else average += k to v
-//    }
-//    average.map { (k, _) ->
-//        average[k] = average[k]!!.div(sum[k]!!)
-//    }
-//    return average
-//}
+
 
 /**
  * Средняя
@@ -230,7 +214,9 @@ fun findCheapestStuff(stuff: Map<String, Pair<String, Double>>, kind: String): S
 fun canBuildFrom(chars: List<Char>, word: String): Boolean {
     val wordSet = word.toSet()
     val charsLow = chars.map { it.toLowerCase() }
-    wordSet.map { if (it.toLowerCase() !in charsLow) return false }
+    for (i in wordSet) {
+        if (i.toLowerCase() !in charsLow) return false
+    }
     return true
 }
 
@@ -309,24 +295,7 @@ fun propagateHandshakes(friends: Map<String, Set<String>>): Map<String, Set<Stri
  *   findSumOfTwo(listOf(1, 2, 3), 4) -> Pair(0, 2)
  *   findSumOfTwo(listOf(1, 2, 3), 6) -> Pair(-1, -1)
  */
-fun findSumOfTwo(list: List<Int>, number: Int): Pair<Int, Int> {
-    val numbers = IntArray(number + 1) { -1 }
-    if ((number % 2 == 0) && (number / 2 in list)) {
-        val pair = mutableListOf<Int>()
-        for (i in 0 until list.size) {
-            if (list[i] == number / 2) pair += i
-        }
-        if (pair.size > 1) return Pair(pair[0], pair[1])
-    }
-    for (i in 0 until number + 1) {
-        if (i in list) numbers[i] = list.indexOf(i)
-    }
-    for (i in 0 until number) {
-        if ((numbers[i] != -1) && (numbers[number - i] != -1) && (numbers[i] != numbers[number - i]))
-            return Pair(minOf(numbers[i], numbers[number - i]), maxOf(numbers[i], numbers[number - i]))
-    }
-    return Pair(-1, -1)
-}
+fun findSumOfTwo(list: List<Int>, number: Int): Pair<Int, Int> = TODO()
 
 /**
  * Очень сложная
