@@ -64,7 +64,7 @@ class Complex(val re: Double, val im: Double) {
     /**
      * Преобразование в строку
      */
-    override fun toString(): String =
+    fun conversion(): String =
         when {
             re == 0.0 -> "${im}i"
             im == 0.0 -> "$re"
