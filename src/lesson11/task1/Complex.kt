@@ -21,9 +21,8 @@ class Complex(val re: Double, val im: Double) {
     constructor(x: Double) : this(x, 0.0)
 
     /**
-     * Конструктор из строки вида x+yi
+     * Конструктор из строки вида x+yi (Конструктор заменен на функцию верхнего уровня, приведенную ниже.)
      */
-    constructor(s: String) : this(rev(s).first, rev(s).second)
 
     /**
      * Сложение.
@@ -64,7 +63,7 @@ class Complex(val re: Double, val im: Double) {
     /**
      * Преобразование в строку
      */
-    fun conversion(): String =
+    override fun toString(): String =
         when {
             re == 0.0 -> "${im}i"
             im == 0.0 -> "$re"
@@ -81,16 +80,24 @@ class Complex(val re: Double, val im: Double) {
     }
 }
 
-private fun rev(s: String): Pair<Double, Double> {
+fun complex(s: String): Complex {
     var first = 0.0
     var second = 0.0
     var k = 1.0
+    var pow = 1.0
     for (i in 0 until s.length - 1) {
-        if ((s[i] == '+') || (s[i] == '-')) {
-            if (s[i] == '-') k = -1.0
-            first = second.also { second = 0.0 }
-            if (s[i + 1] == 'i') second = 1.0
-        } else second = second * 10 + s[i].toString().toDouble()
+        if (s[i] == '.') pow *= 10.0
+        else {
+            if ((s[i] == '+') || (s[i] == '-')) {
+                if (s[i] == '-') k = -1.0
+                first = second.also { second = 0.0 }
+                pow = 1.0
+                if (s[i + 1] == 'i') second = 1.0
+            } else if (pow > 1.0) {
+                second += s[i].toString().toDouble() / pow
+                pow *= 10.0
+            } else second = second * 10 + s[i].toString().toDouble()
+        }
     }
-    return Pair(first, second * k)
+    return Complex(first, second * k)
 }

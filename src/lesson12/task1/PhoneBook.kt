@@ -27,7 +27,7 @@ class PhoneBook {
      */
     fun addHuman(name: String): Boolean {
         if (name !in book) {
-            book += (name to mutableSetOf())
+            book[name] = mutableSetOf()
             return true
         }
         return false
@@ -39,13 +39,7 @@ class PhoneBook {
      * и false, если человек с таким именем отсутствовал в телефонной книге
      * (во втором случае телефонная книга не должна меняться).
      */
-    fun removeHuman(name: String): Boolean {
-        if (name in book) {
-            book.remove(name)
-            return true
-        }
-        return false
-    }
+    fun removeHuman(name: String): Boolean = book.remove(name, mutableSetOf())
 
     /**
      * Добавить номер телефона.
@@ -56,7 +50,6 @@ class PhoneBook {
      */
     fun addPhone(name: String, phone: String): Boolean {
         if (name in book) {
-            if ((book[name]!!.contains(phone))) return false
             book.map { if (it.value.contains(phone)) return false }
             book[name]?.plusAssign(phone)
             return true
@@ -71,8 +64,9 @@ class PhoneBook {
      * либо у него не было такого номера телефона.
      */
     fun removePhone(name: String, phone: String): Boolean {
-        if (name in book) {
-            if (!(book[name]!!.contains(phone))) return false
+        var c = 0
+        book.map { if (it.value.contains(phone)) c++ }
+        if ((name in book) && (c == 1)) {
             book[name]?.remove(phone)
             return true
         }
